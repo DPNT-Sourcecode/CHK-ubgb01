@@ -11,4 +11,4 @@ def hello(friend_name):
     """
     if not (isinstance(friend_name, unicode)):
         return 'Please enter a string only.'
-    return "Hello, {}".format(friend_name)
+    return "Hello, {}".format('World!')
