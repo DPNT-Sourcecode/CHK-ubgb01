@@ -41,9 +41,11 @@ def checkout(skus):
     checkout_basket = Counter(x[0] for x in skus if x)
     for item, quantity in checkout_basket.items():
         if item == 'A' and quantity >= 3:
-            total_checkout += ((quantity * PRICE_TABLE[item]) - 20)
+            price = ((quantity * PRICE_TABLE[item]) - 20)
+            total_checkout += price
         elif item == 'B' and quantity >= 2:
-            total_checkout += ((quantity * PRICE_TABLE[item]) - 15)
+            price = ((quantity * PRICE_TABLE[item]) - 15)
+            total_checkout += price
         else:
             total_checkout += quantity * PRICE_TABLE[item]
     return total_checkout 
