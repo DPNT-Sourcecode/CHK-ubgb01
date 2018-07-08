@@ -11,4 +11,6 @@ def hello(friend_name):
     """
     if not (isinstance(friend_name, str)):
         return 'Please enter a string only.'
+    if not (friend_name.isalpha()):
+        return 'Please enter a string with Alphabetic characters only'
     return "Hello, {}".format(friend_name)
