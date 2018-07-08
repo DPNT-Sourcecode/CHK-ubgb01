@@ -1,6 +1,14 @@
-
-
 # noinspection PyUnusedLocal
 # friend_name = unicode string
+
+
 def hello(friend_name):
-    raise NotImplementedError()
+    """
+    Return string with message.
+
+    param friend_name: a String.
+    @return: a String containing a message.
+    """
+    if not (isinstance(friend_name, str)):
+        return 'Please enter a string only.'
+    return "Hello, {}".format(friend_name)
