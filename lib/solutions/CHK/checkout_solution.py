@@ -42,7 +42,7 @@ def checkout(skus):
     for item, quantity in checkout_basket.items():
         if item == 'A' and quantity == 3:
             price = 130
-            total_checkout += price
+            total_checkout += ((quantity * PRICE_TABLE[item]) - 20)
         elif item == 'B' and quantity == 2:
             price = 45
             total_checkout += price
