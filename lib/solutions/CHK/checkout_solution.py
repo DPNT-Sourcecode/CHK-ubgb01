@@ -10,6 +10,13 @@ PRICE_TABLE = {
 
 
 def illegal_input(skus):
+    """
+    Check if there are any illegal characters.
+    Acceptable characters: ABCD, anything else will be an illegal character.
+
+    param skus: a String
+    @return:    Boolean value
+    """
     for letter in skus:
         if letter not in PRICE_TABLE:
             return True
