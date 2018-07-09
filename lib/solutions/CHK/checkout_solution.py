@@ -3,6 +3,7 @@ PRICE_TABLE = {
     'B': 30,
     'C': 20,
     'D': 15,
+    'E': 40,
 }
 
 
@@ -43,11 +44,16 @@ def checkout(skus):
             quantity[item] += 1
         except KeyError:
             quantity[item] = 1
-            
+
         if item == 'A' and quantity[item] % 3 == 0:
             total_checkout += PRICE_TABLE[item] - 20
+        elif item == 'A' and quantity[item] % 5 == 0:
+            total_checkout += PRICE_TABLE[item] - 30
         elif item == 'B' and quantity[item] % 2 == 0:
             total_checkout += PRICE_TABLE[item] - 15
+        elif item == 'E' and quantity[item] % 2 == 0:
+            # get item B for free
+            total_checkout += PRICE_TABLE[item] - 30
         else:
             total_checkout += PRICE_TABLE[item]
     return total_checkout

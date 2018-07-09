@@ -10,16 +10,18 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.illegal_input('ABCD'), False)
 
     def test_checkout(self):
+        self.assertEqual(checkout_solution.checkout('EEBB'), 95)
         self.assertEqual(checkout_solution.checkout('BAB'), 95)
-        self.assertEqual(checkout_solution.checkout('CDBA'), 115)
         self.assertEqual(checkout_solution.checkout('AAAA'), 180)
-        self.assertEqual(checkout_solution.checkout('AAAAA'), 230)
+        self.assertEqual(checkout_solution.checkout('AEEC'), 120)
+        self.assertEqual(checkout_solution.checkout('CDBEA'), 155)
+        self.assertEqual(checkout_solution.checkout('AAAAA'), 200)
         self.assertEqual(checkout_solution.checkout('BBBBB'), 120)
         self.assertEqual(checkout_solution.checkout('AAABBD'), 190)
-        self.assertEqual(checkout_solution.checkout('AAAAAA'), 260)
-        self.assertEqual(checkout_solution.checkout('AAABCCC'), 220)
+        self.assertEqual(checkout_solution.checkout('AAAAAA'), 230)
         self.assertEqual(checkout_solution.checkout('AABBCDD'), 195)
-        self.assertEqual(checkout_solution.checkout('AABbCDD'), -1)
+        self.assertEqual(checkout_solution.checkout('AAAAABCC'), 270)
+        self.assertEqual(checkout_solution.checkout('AABbCDDea'), -1)
 
 
 if __name__ == '__main__':
