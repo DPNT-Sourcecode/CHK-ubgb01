@@ -1,6 +1,3 @@
-from collections import Counter
-
-
 PRICE_TABLE = {
     'A': 50,
     'B': 30,
@@ -12,7 +9,8 @@ PRICE_TABLE = {
 def illegal_input(skus):
     """
     Check if there are any illegal characters.
-    Acceptable characters: ABCD, anything else will be an illegal character.
+    Acceptable characters: ABCD, any other character
+    will be an illegal character.
 
     param skus: a String
     @return:    Boolean value
@@ -27,25 +25,29 @@ def illegal_input(skus):
 # skus = unicode string
 def checkout(skus):
     """
+    Return the total price for the checkout basket.
+
     param skus: a String containing the SKUs of all the 
                 products in the basket.
     @return:    an Integer representing the total checkout
                 value of the items.
     """
     total_checkout = 0
-    
+    quantity = {}
 
     if illegal_input(skus):
         return -1
 
-    checkout_basket = Counter(x[0] for x in skus if x)
-    for item, quantity in checkout_basket.items():
-        if item == 'A' and quantity >= 3:
-            price = ((quantity * PRICE_TABLE[item]) - 20)
-            total_checkout += price
-        elif item == 'B' and quantity >= 2:
-            price = ((quantity * PRICE_TABLE[item]) - 15)
-            total_checkout += price
+    for item in skus:
+        try:
+            quantity[item] += 1
+        except KeyError:
+            quantity[item] = 1
+            
+        if item == 'A' and quantity[item] % 3 == 0:
+            total_checkout += PRICE_TABLE[item] - 20
+        elif item == 'B' and quantity[item] % 2 == 0:
+            total_checkout += PRICE_TABLE[item] - 15
         else:
-            total_checkout += quantity * PRICE_TABLE[item]
-    return total_checkout 
+            total_checkout += PRICE_TABLE[item]
+    return total_checkout
