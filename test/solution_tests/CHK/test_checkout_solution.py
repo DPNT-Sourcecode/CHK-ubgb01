@@ -19,7 +19,7 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.checkout('AAAAAA'), 260)
         self.assertEqual(checkout_solution.checkout('AAABCCC'), 220)
         self.assertEqual(checkout_solution.checkout('AABBCDD'), 195)
-        self.assertEqual(checkout('AABbCDD'), -1)
+        self.assertEqual(checkout_solution.checkout('AABbCDD'), -1)
 
 
 if __name__ == '__main__':
