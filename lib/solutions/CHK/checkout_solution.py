@@ -9,7 +9,7 @@ PRICE_TABLE = {
     'H': 10,
     'I': 35,
     'J': 60,
-    'K': 80,
+    'K': 70,
     'L': 90,
     'M': 15,
     'N': 40,
@@ -17,14 +17,14 @@ PRICE_TABLE = {
     'P': 50,
     'Q': 30,
     'R': 50,
-    'S': 30,
+    'S': 20,
     'T': 20,
     'U': 40,
     'V': 50,
     'W': 20,
-    'X': 90,
-    'Y': 10,
-    'Z': 50
+    'X': 17,
+    'Y': 20,
+    'Z': 21
 }
 
 
@@ -61,6 +61,11 @@ def checkout(skus):
     free_m_count = 0
     free_q_count = 0
     free_u_count = 0
+    any_two_sale = ['K', 'B', 'V']
+    any_three_sale = ['A', 'Q', 'V', 'S', 'T', 'X', 'Y', 'Z']
+    any_five_sale = ['P', 'H']
+    two_get_one_free_sale = ['F', 'E']
+    three_get_one_sale = ['U', 'R', 'N']
     
     if illegal_input(skus):
         return -1
@@ -74,78 +79,92 @@ def checkout(skus):
         except KeyError:
             quantity[item] = 1
         
-        # 3V for 130
-        if item == 'V' and quantity[item] % 3 == 0:
-            total_checkout += PRICE_TABLE[item] - 10
-            quantity[item] = 0
-        # 2V for 90
-        elif item == 'V' and quantity[item] % 2 == 0:
-            total_checkout += PRICE_TABLE[item] - 10
-        # 3U get one U free
-        elif item == 'U' and quantity[item] % 3 == 0:
-            free_u_count += 1
-            total_checkout += PRICE_TABLE[item]
-        elif item == 'U' and free_u_count:
-            free_u_count -= 1
-            quantity[item] = 0
-
-        # 3R get one Q free
-        elif item == 'R' and quantity[item] % 3 == 0:
-            free_q_count += 1
-            total_checkout += PRICE_TABLE[item]
-        elif item == 'Q' and free_q_count:
-            free_q_count -= 1
-            quantity[item] = 0
-        # 3Q for 80
-        elif item == 'Q' and quantity[item] % 3 == 0:
-            total_checkout += PRICE_TABLE[item] - 10
-        # 5P for 200
-        elif item == 'P' and quantity[item] % 5 == 0:
-            total_checkout += PRICE_TABLE[item] - 50
-        # 3N get one M free
-        elif item == 'N' and quantity[item] % 3 == 0:
-            free_m_count += 1
-            total_checkout += PRICE_TABLE[item]
-        elif item == 'M' and free_m_count:
-            free_m_count -= 1
-            quantity[item] = 0
-        # 2K for 150
-        elif item == 'K' and quantity[item] % 2 == 0:
-            total_checkout += PRICE_TABLE[item] - 10
-        # 10H for 80
-        elif item == 'H' and quantity[item] % 10 == 0:
-            total_checkout += PRICE_TABLE[item] - 15
-            quantity[item] = 0
-        # 5H for 45
-        elif item == 'H' and quantity[item] % 5 == 0:
-            total_checkout += PRICE_TABLE[item] - 5
-        # 2F get one F free
-        elif item == 'F' and quantity[item] % 2 == 0:
-            free_f_count += 1
-            total_checkout += PRICE_TABLE[item]
-        elif item == 'F' and free_f_count:
-            free_f_count -= 1
-            quantity[item] = 0
-        # 2E get one B free
-        elif item == 'E' and quantity[item] % 2 == 0:
-            # keep count of how may B items shopper should get
-            free_b_count += 1
-            total_checkout += PRICE_TABLE[item]
-        elif item == 'B' and free_b_count:
-            free_b_count -=1 
-            quantity[item] = 0
-        # 2B for 45
-        elif item == 'B' and quantity[item] % 2 == 0:
-            total_checkout += PRICE_TABLE[item] - 15
         # 5A for 200
-        elif item == 'A' and quantity[item] % 5 == 0:
+        if item == 'A' and quantity[item] % 5 == 0:
             # add back money removed from special offer 3A
             total_checkout += 20
             # reset count
             quantity[item] = 0
+
         # 3A for 130
-        elif item == 'A' and quantity[item] % 3 == 0:
-            total_checkout += PRICE_TABLE[item] - 20
+        # 3Q for 80
+        # 3V for 130
+        elif item in any_three_sale and quantity[item] % 3 == 0:
+            if item == 'A':
+                total_checkout += PRICE_TABLE[item] - 20
+            elif item == 'Q':
+                total_checkout += PRICE_TABLE[item] - 10
+            elif item == 'V':
+                total_checkout += PRICE_TABLE[item] - 10
+                quantity[item] = 0
+            elif item in ['S', 'T', 'Y']:
+                total_checkout += PRICE_TABLE[item] - 15
+            elif item == 'X':
+                total_checkout += PRICE_TABLE[item] - 6
+            else:
+                total_checkout += PRICE_TABLE[item] - 18
+
+        # 2K for 120
+        # 2B for 45
+        # 2V for 90
+        elif item in any_two_sale and quantity[item] % 2 == 0:
+            if item == 'K':
+                total_checkout += PRICE_TABLE[item] -20
+            elif item == 'B':
+                total_checkout += PRICE_TABLE[item] - 15
+            else:
+                total_checkout += PRICE_TABLE[item] - 10
+
+        # 3U get one U free 
+        # 3R get one Q free 
+        # 3N get one M free
+        elif item in three_get_one_sale and quantity[item] % 3 == 0:
+            if item == 'U':
+                free_u_count += 1
+            elif item == 'R':
+                free_q_count += 1
+            else:
+                free_m_count += 1
+            total_checkout += PRICE_TABLE[item]
+        elif item == 'U' and free_u_count or \
+             item == 'Q' and free_q_count or \
+             item == 'M' and free_m_count:
+            if item == 'U':
+                free_u_count -= 1
+            elif item == 'Q':
+                free_q_count -= 1
+            else:
+                free_m_count -= 1
+            quantity[item] = 0
+
+        # 10H for 80
+        elif item == 'H' and quantity[item] % 10 == 0:
+            total_checkout += PRICE_TABLE[item] - 15
+            quantity[item] = 0
+
+        # 5P for 200 
+        # 5H for 45
+        elif item in any_five_sale and quantity[item] % 5 == 0:
+            if item == 'P':
+                total_checkout += PRICE_TABLE[item] - 50
+            else:
+                total_checkout += PRICE_TABLE[item] - 5
+
+        # 2F get one F free 
+        # 2E get one B free
+        elif item in two_get_one_free_sale and quantity[item] % 2 == 0:
+            if item == 'F':
+                free_f_count += 1
+            else:
+                free_b_count += 1
+            total_checkout += PRICE_TABLE[item]
+        elif item == 'F' and free_f_count or \
+             item == 'B' and free_b_count:
+            if item == 'F':
+                free_f_count -= 1
+            else:
+                free_b_count -= 1
+            quantity[item] = 0
         else:
             total_checkout += PRICE_TABLE[item]
     return total_checkout
