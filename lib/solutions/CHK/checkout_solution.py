@@ -56,14 +56,17 @@ def checkout(skus):
     """
     quantity = {}
     total_checkout = 0
+    discount = 0
+    pre_discount = 0
     free_b_count = 0
     free_f_count = 0
     free_m_count = 0
     free_q_count = 0
     free_u_count = 0
-    any_two_sale = ['K', 'B', 'V']
-    any_three_sale = ['A', 'Q', 'V', 'S', 'T', 'X', 'Y', 'Z']
-    any_five_sale = ['P', 'H']
+    any_three = []
+    buy_two_with_discount = ['K', 'B', 'V']
+    buy_three_with_discount = ['A', 'Q', 'V']
+    buy_five_with_discount = ['P', 'H']
     two_get_one_free_sale = ['F', 'E']
     three_get_one_sale = ['U', 'R', 'N']
     
@@ -89,7 +92,7 @@ def checkout(skus):
         # 3A for 130
         # 3Q for 80
         # 3V for 130
-        elif item in any_three_sale and quantity[item] % 3 == 0:
+        elif item in buy_three_with_discount and quantity[item] % 3 == 0:
             if item == 'A':
                 total_checkout += PRICE_TABLE[item] - 20
             elif item == 'Q':
@@ -97,17 +100,11 @@ def checkout(skus):
             elif item == 'V':
                 total_checkout += PRICE_TABLE[item] - 10
                 quantity[item] = 0
-            elif item in ['S', 'T', 'Y']:
-                total_checkout += PRICE_TABLE[item] - 15
-            elif item == 'X':
-                total_checkout += PRICE_TABLE[item] - 6
-            else:
-                total_checkout += PRICE_TABLE[item] - 18
 
         # 2K for 120
         # 2B for 45
         # 2V for 90
-        elif item in any_two_sale and quantity[item] % 2 == 0:
+        elif item in buy_two_with_discount and quantity[item] % 2 == 0:
             if item == 'K':
                 total_checkout += PRICE_TABLE[item] -20
             elif item == 'B':
@@ -144,7 +141,7 @@ def checkout(skus):
 
         # 5P for 200 
         # 5H for 45
-        elif item in any_five_sale and quantity[item] % 5 == 0:
+        elif item in buy_five_with_discount and quantity[item] % 5 == 0:
             if item == 'P':
                 total_checkout += PRICE_TABLE[item] - 50
             else:
@@ -165,6 +162,17 @@ def checkout(skus):
             else:
                 free_b_count -= 1
             quantity[item] = 0
+
+        # buy any 3 of (S,T,X,Y,Z) for 45
+        elif item in ['S', 'T', 'X', 'Y', 'Z']:
+            total_checkout += PRICE_TABLE[item]
+            pre_discount += PRICE_TABLE[item]
+            any_three.append(item)
+            if len(any_three) % 3 == 0:
+                discount += pre_discount - 45
+                pre_discount = 0
         else:
             total_checkout += PRICE_TABLE[item]
+    
+    total_checkout -= discount
     return total_checkout
