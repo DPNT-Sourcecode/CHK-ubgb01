@@ -34,34 +34,40 @@ def checkout(skus):
                 value of the items.
     """
     total_checkout = 0
-    quantity = {}
-    so_5A = False
+    free_b_count = 0
+    quantity = {
+        'A': 0,
+        'B': 0,
+        'C': 0,
+        'D': 0,
+        'E': 0,
+    }
     
     if illegal_input(skus):
         return -1
 
-    for item in skus:
-        try:
-            quantity[item] += 1
-        except KeyError:
-            quantity[item] = 1
+    # sort and reverse string: EBBEEEB --> EEEEBBB
+    skus = ''.join(sorted(skus, reverse=True))
 
-        if item == 'A' and quantity[item] % 5 == 0:
-            # add back money removed from special offer 3A
-            total_checkout += 20
-            # activate special offer 5A
-            so_5A = True
-        elif item == 'A' and quantity[item] % 3 == 0:
-            if so_5A:
-                total_checkout += PRICE_TABLE[item]
-                so_5A = False
-            else:
-                total_checkout += PRICE_TABLE[item] - 20
+    for item in skus:
+        quantity[item] += 1
+        
+        if item == 'E' and quantity[item] % 2 == 0:
+            # keep count of how may B items shopper should get
+            free_b_count += 1
+            total_checkout += PRICE_TABLE[item]
+        elif item == 'B' and free_b_count:
+            free_b_count -=1 
+            quantity[item] = 0
         elif item == 'B' and quantity[item] % 2 == 0:
             total_checkout += PRICE_TABLE[item] - 15
-        elif item == 'E' and quantity[item] % 2 == 0:
-            # get item B for free
-            total_checkout += PRICE_TABLE[item] - 30
+        elif item == 'A' and quantity[item] % 5 == 0:
+            # add back money removed from special offer 3A
+            total_checkout += 20
+            # reset count
+            quantity[item] = 0
+        elif item == 'A' and quantity[item] % 3 == 0:
+            total_checkout += PRICE_TABLE[item] - 20
         else:
             total_checkout += PRICE_TABLE[item]
     return total_checkout
