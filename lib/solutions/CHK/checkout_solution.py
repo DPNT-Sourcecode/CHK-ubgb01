@@ -4,6 +4,7 @@ PRICE_TABLE = {
     'C': 20,
     'D': 15,
     'E': 40,
+    'F': 10,
 }
 
 
@@ -35,12 +36,14 @@ def checkout(skus):
     """
     total_checkout = 0
     free_b_count = 0
+    free_f_count = 0
     quantity = {
         'A': 0,
         'B': 0,
         'C': 0,
         'D': 0,
         'E': 0,
+        'F': 0,
     }
     
     if illegal_input(skus):
@@ -52,7 +55,13 @@ def checkout(skus):
     for item in skus:
         quantity[item] += 1
         
-        if item == 'E' and quantity[item] % 2 == 0:
+        if item == 'F' and quantity[item] % 2 == 0:
+            free_f_count +=1
+            total_checkout += PRICE_TABLE[item]
+        elif item == 'F' and free_f_count:
+            free_f_count -= 1
+            quantity[item] = 0
+        elif item == 'E' and quantity[item] % 2 == 0:
             # keep count of how may B items shopper should get
             free_b_count += 1
             total_checkout += PRICE_TABLE[item]
