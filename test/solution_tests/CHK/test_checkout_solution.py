@@ -61,10 +61,10 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.checkout('HHHHHHHHHHHHHHHHHHHHH'), 170)
         self.assertEqual(checkout_solution.checkout('HHHHHHHHHHHHHHHHHHHHHHHHH'), 205)
 
-        self.assertEqual(checkout_solution.checkout('K'), 80)
-        self.assertEqual(checkout_solution.checkout('KK'), 150)
-        self.assertEqual(checkout_solution.checkout('KKK'), 230)
-        self.assertEqual(checkout_solution.checkout('KKKK'), 300)
+        self.assertEqual(checkout_solution.checkout('K'), 70)
+        self.assertEqual(checkout_solution.checkout('KK'), 120)
+        self.assertEqual(checkout_solution.checkout('KKK'), 190)
+        self.assertEqual(checkout_solution.checkout('KKKK'), 240)
 
         self.assertEqual(checkout_solution.checkout('NN'), 80)
         self.assertEqual(checkout_solution.checkout('NNN'), 120)
@@ -95,9 +95,20 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.checkout('VV'), 90)
         self.assertEqual(checkout_solution.checkout('VVV'), 130)
         self.assertEqual(checkout_solution.checkout('VVVV'), 180)
-        
+
         self.assertEqual(checkout_solution.checkout('VVVVV'), 220)
         self.assertEqual(checkout_solution.checkout('VVVVVV'), 260)
+        self.assertEqual(checkout_solution.checkout('SS'), 40)
+        self.assertEqual(checkout_solution.checkout('SSS'), 45)
+
+        self.assertEqual(checkout_solution.checkout('SSSS'), 65)
+        self.assertEqual(checkout_solution.checkout('SSSSSS'), 90)
+        self.assertEqual(checkout_solution.checkout('XX'), 34)
+        self.assertEqual(checkout_solution.checkout('XXX'), 45)
+
+        self.assertEqual(checkout_solution.checkout('XXXXXX'), 90)
+        self.assertEqual(checkout_solution.checkout('ZZ'), 42)
+        self.assertEqual(checkout_solution.checkout('ZZZ'), 45)
 
 if __name__ == '__main__':
     unittest.main()
