@@ -84,6 +84,9 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.checkout('QQQQQQ'), 160)
         self.assertEqual(checkout_solution.checkout('QQQQQQQQQ'), 240)
         self.assertEqual(checkout_solution.checkout('QQQQQQQQQQ'), 270)
+        self.assertEqual(checkout_solution.checkout('UUU'), 120)
+
+        
         self.assertEqual(checkout_solution.checkout('VV'), 90)
 
         self.assertEqual(checkout_solution.checkout('VVV'), 130)

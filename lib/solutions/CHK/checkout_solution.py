@@ -60,6 +60,7 @@ def checkout(skus):
     free_f_count = 0
     free_m_count = 0
     free_q_count = 0
+    free_u_count = 0
     
     if illegal_input(skus):
         return -1
@@ -80,6 +81,14 @@ def checkout(skus):
         # 2V for 90
         elif item == 'V' and quantity[item] % 2 == 0:
             total_checkout += PRICE_TABLE[item] - 10
+        # 3U get one U free
+        elif item == 'U' and quantity[item] % 3 == 0:
+            free_u_count += 1
+            total_checkout += PRICE_TABLE[item]
+        elif item == 'U' and free_u_count:
+            free_u_count -= 1
+            quantity[item] = 0
+
         # 3R get one Q free
         elif item == 'R' and quantity[item] % 3 == 0:
             free_q_count += 1
