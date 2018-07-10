@@ -90,11 +90,12 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.checkout('UUUUU'), 160)
         self.assertEqual(checkout_solution.checkout('UUUUUU'), 200)
         self.assertEqual(checkout_solution.checkout('UUUUUUU'), 240)
+
         self.assertEqual(checkout_solution.checkout('UUUUUUUU'), 240)
         self.assertEqual(checkout_solution.checkout('VV'), 90)
-
         self.assertEqual(checkout_solution.checkout('VVV'), 130)
         self.assertEqual(checkout_solution.checkout('VVVV'), 180)
+        
         self.assertEqual(checkout_solution.checkout('VVVVV'), 220)
         self.assertEqual(checkout_solution.checkout('VVVVVV'), 260)
 
