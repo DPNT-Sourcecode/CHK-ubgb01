@@ -110,8 +110,16 @@ class TestCheckout(unittest.TestCase):
         self.assertEqual(checkout_solution.checkout('ZZ'), 42)
         self.assertEqual(checkout_solution.checkout('ZZZ'), 45)
         self.assertEqual(checkout_solution.checkout('STX'), 45)
+
+        self.assertEqual(checkout_solution.checkout('STXZ'), 62)
         self.assertEqual(checkout_solution.checkout('STXSTX'), 90)
-        self.assertEqual(checkout_solution.checkout('SSSZ'), 65)
+        self.assertEqual(checkout_solution.checkout('STXSZ'), 82)
+        self.assertEqual(checkout_solution.checkout('STX'), 45)  # expected: 45, got: 57
+        
+        self.assertEqual(checkout_solution.checkout('STXSTX'), 90)  # expected: 90, got: 114
+        self.assertEqual(checkout_solution.checkout('SSSZ'), 65)  # expected: 65, got: 66
+        self.assertEqual(checkout_solution.checkout('STXS'), 62)
+        self.assertEqual(checkout_solution.checkout('ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1602)
 
 if __name__ == '__main__':
     unittest.main()
